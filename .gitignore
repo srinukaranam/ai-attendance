@@ -1,0 +1,20 @@
+    # .gitignore file content
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+.env
+*.sqlite3
+*.db
+instance/
+.DS_Store
+*.log
+.vscode/
+.idea/
+*.egg-info/
+dist/
+build/

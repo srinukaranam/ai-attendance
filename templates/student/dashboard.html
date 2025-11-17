@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1>Student Dashboard</h1>
+    <p>Welcome back, {{ student.name }}!</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon success">
+            <i class="fas fa-calendar-check"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ present_count }}</h3>
+            <p>Days Present</p>
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon warning">
+            <i class="fas fa-calendar-times"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ total_sessions - present_count }}</h3>
+            <p>Days Absent</p>
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon primary">
+            <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ attendance_percentage }}%</h3>
+            <p>Attendance Percentage</p>
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon info">
+            <i class="fas fa-user-check"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{% if student.face_registered %}Yes{% else %}No{% endif %}</h3>
+            <p>Face Registered</p>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-content">
+    <div class="content-card">
+        <div class="card-header">
+            <h3>Recent Attendance</h3>
+            {% if not student.face_registered %}
+            <a href="{{ url_for('face_registration') }}" class="btn btn-primary">
+                <i class="fas fa-camera"></i> Register Face
+            </a>
+            {% endif %}
+        </div>
+        <div class="card-body">
+            {% if recent_attendance %}
+            <div class="attendance-list">
+                {% for attendance, session in recent_attendance %}
+                <div class="attendance-item">
+                    <div class="attendance-date">
+                        <strong>{{ format_local_date(session.session_date) }}</strong>
+                        <span class="attendance-status {{ attendance.status|lower }}">
+                            {{ attendance.status }}
+                        </span>
+                    </div>
+                    <div class="attendance-class">
+                        {{ session.class_name }} - {{ session.branch }}
+                        <small>at {{ format_local_time_short(session.start_time) }}</small>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <i class="fas fa-clipboard-list"></i>
+                <p>No attendance records found</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="content-card">
+        <div class="card-header">
+            <h3>Quick Actions</h3>
+        </div>
+        <div class="card-body">
+            <div class="action-buttons">
+                <a href="{{ url_for('face_registration') }}" class="action-btn {% if student.face_registered %}disabled{% endif %}">
+                    <i class="fas fa-camera"></i>
+                    <span>Face Registration</span>
+                    {% if student.face_registered %}
+                    <small class="status-badge success">Completed</small>
+                    {% else %}
+                    <small class="status-badge warning">Pending</small>
+                    {% endif %}
+                </a>
+                
+                <a href="{{ url_for('student_analytics') }}" class="action-btn">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>View Analytics</span>
+                    <small>Detailed reports</small>
+                </a>
+                
+                <a href="{{ url_for('download_report') }}" class="action-btn">
+                    <i class="fas fa-download"></i>
+                    <span>Download Report</span>
+                    <small>CSV format</small>
+                </a>
+
+                <a href="{{ url_for('download_pdf_report') }}" target="_blank" class="action-btn">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>PDF Report</span>
+                    <small>Printable format</small>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

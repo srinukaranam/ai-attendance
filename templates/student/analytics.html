@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}Student Analytics{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1>Attendance Analytics</h1>
+    <p>Detailed insights and statistics for {{ student.name }}</p>
+</div>
+
+<div class="analytics-container">
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon primary">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="stat-info">
+                <h3>{{ present_count }}</h3>
+                <p>Total Present</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon warning">
+                <i class="fas fa-chart-bar"></i>
+            </div>
+            <div class="stat-info">
+                <h3>{{ total_sessions - present_count }}</h3>
+                <p>Total Absent</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon success">
+                <i class="fas fa-percentage"></i>
+            </div>
+            <div class="stat-info">
+                <h3>{{ attendance_percentage }}%</h3>
+                <p>Overall Percentage</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon info">
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            <div class="stat-info">
+                <h3>{{ total_sessions }}</h3>
+                <p>Total Sessions</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="analytics-grid">
+        <div class="content-card">
+            <div class="card-header">
+                <h3>Monthly Attendance Trend</h3>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-line"></i>
+                        <p>Monthly Attendance Chart</p>
+                        <small>Shows your attendance trend over the past months</small>
+                        <div class="chart-data-preview">
+                            {% for month in months_data %}
+                            <div class="data-item">
+                                <span>{{ month.month }}</span>
+                                <span class="percentage">{{ month.percentage }}%</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="card-header">
+                <h3>Attendance by Day</h3>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>Day-wise Performance</p>
+                        <small>Your attendance pattern across different days</small>
+                        <div class="chart-data-preview">
+                            {% for day in day_stats %}
+                            <div class="data-item">
+                                <span>{{ day.day }}</span>
+                                <span class="percentage">{{ day.percentage }}%</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="card-header">
+                <h3>Monthly Breakdown</h3>
+            </div>
+            <div class="card-body">
+                <div class="stats-list">
+                    {% for month in months_data %}
+                    <div class="stat-item">
+                        <span class="stat-label">{{ month.month }}</span>
+                        <span class="stat-value">{{ month.present }}/{{ month.total }} ({{ month.percentage }}%)</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="card-header">
+                <h3>Recent Attendance</h3>
+            </div>
+            <div class="card-body">
+                <div class="attendance-list">
+                    {% for attendance, session in attendances[:5] %}
+                    <div class="attendance-item">
+                        <div class="attendance-date">
+                            <strong>{{ session.session_date.strftime('%d %b %Y') }}</strong>
+                            <span class="attendance-status {{ attendance.status|lower }}">
+                                {{ attendance.status }}
+                            </span>
+                        </div>
+                        <div class="attendance-class">
+                            {{ session.class_name }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% if attendances|length == 0 %}
+                    <div class="empty-state">
+                        <i class="fas fa-clipboard-list"></i>
+                        <p>No attendance records found</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-card">
+        <div class="card-header">
+            <h3>Export Reports</h3>
+        </div>
+        <div class="card-body">
+            <div class="export-options">
+                <a href="{{ url_for('download_report') }}" class="btn btn-primary">
+                    <i class="fas fa-file-csv"></i> Download CSV Report
+                </a>
+                <a href="{{ url_for('download_pdf_report') }}" class="btn btn-secondary" target="_blank">
+                    <i class="fas fa-file-pdf"></i> Generate PDF Report
+                </a>
+                <button onclick="window.print()" class="btn btn-outline">
+                    <i class="fas fa-print"></i> Print Report
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Take Attendance{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1>Take Attendance</h1>
+    <p>Start a new attendance session or continue existing one</p>
+</div>
+
+<div class="attendance-container">
+    {% if not session_id %}
+    <div class="session-setup">
+        <div class="content-card">
+            <div class="card-header">
+                <h3>Start New Session</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" class="session-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="class_name">Class Name</label>
+                            <input type="text" id="class_name" name="class_name" class="form-input" 
+                                   placeholder="e.g., CS101, Mathematics" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="branch">Branch</label>
+                            <select id="branch" name="branch" class="form-select" required>
+                                <option value="">Select Branch</option>
+                                <option value="CSE">Computer Science</option>
+                                <option value="ECE">Electronics</option>
+                                <option value="ME">Mechanical</option>
+                                <option value="CE">Civil</option>
+                                <option value="EE">Electrical</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="year">Year</label>
+                            <select id="year" name="year" class="form-select" required>
+                                <option value="">Select Year</option>
+                                <option value="1st">1st Year</option>
+                                <option value="2nd">2nd Year</option>
+                                <option value="3rd">3rd Year</option>
+                                <option value="4th">4th Year</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-play-circle"></i> Start Attendance Session
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="attendance-session">
+        <div class="session-info-card">
+            <div class="session-header">
+                <h3>Active Session: {{ class_name }} - {{ branch }}</h3>
+                <div class="session-details">
+                    <span class="session-badge">Year: {{ year }}</span>
+                    <span class="session-badge">Session ID: {{ session_id }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="camera-section">
+            <div class="camera-container">
+                <video id="video" autoplay playsinline></video>
+                <canvas id="canvas" style="display: none;"></canvas>
+                <div class="recognition-overlay">
+                    <div class="face-indicator" id="face-indicator">
+                        <i class="fas fa-user"></i>
+                        <span>Waiting for face detection...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="detected-students">
+                <h4>Detected Students</h4>
+                <div id="students-list" class="students-list">
+                    <!-- Students will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <div class="session-controls">
+            <button id="complete-session" class="btn btn-success" data-session-id="{{ session_id }}">
+                <i class="fas fa-check-circle"></i> Complete Attendance
+            </button>
+            <button id="stop-camera" class="btn btn-outline">
+                <i class="fas fa-stop"></i> Stop Camera
+            </button>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/camera.js') }}"></script>
+<script>
+    {% if session_id %}
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeAttendanceSession({{ session_id }});
+    });
+    {% endif %}
+</script>
+{% endblock %}

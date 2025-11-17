@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}Faculty Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1>Faculty Dashboard</h1>
+    <p>Welcome, {{ faculty.name }}!</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon primary">
+            <i class="fas fa-chalkboard-teacher"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ recent_sessions|length }}</h3>
+            <p>Recent Sessions</p>
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon success">
+            <i class="fas fa-calendar-check"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ faculty.sessions|selectattr('is_completed')|list|length }}</h3>
+            <p>Completed Sessions</p>
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon info">
+            <i class="fas fa-users"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ faculty.department }}</h3>
+            <p>Department</p>
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon warning">
+            <i class="fas fa-id-card"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ faculty.employee_id }}</h3>
+            <p>Employee ID</p>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-content">
+    <div class="content-card">
+        <div class="card-header">
+            <h3>Recent Attendance Sessions</h3>
+            <a href="{{ url_for('take_attendance') }}" class="btn btn-primary">
+                <i class="fas fa-camera"></i> Take Attendance
+            </a>
+        </div>
+        <div class="card-body">
+            {% if recent_sessions %}
+            <div class="sessions-list">
+                {% for session in recent_sessions %}
+                <div class="session-item">
+                    <div class="session-info">
+                        <div class="session-header">
+                            <h4>{{ session.class_name }} - {{ session.branch }}</h4>
+                            <span class="session-status {{ 'completed' if session.is_completed else 'active' }}">
+                                {{ 'Completed' if session.is_completed else 'Active' }}
+                            </span>
+                        </div>
+                        <div class="session-details">
+                            <p><i class="fas fa-calendar"></i> {{ format_local_date(session.session_date) }}</p>
+                            <p><i class="fas fa-clock"></i> {{ format_local_time_short(session.start_time) }}</p>
+                            <p><i class="fas fa-user-graduate"></i> Year: {{ session.year }}</p>
+                        </div>
+                    </div>
+                    <div class="session-actions">
+                        {% if not session.is_completed %}
+                        <a href="{{ url_for('take_attendance') }}?session_id={{ session.id }}" class="btn btn-sm btn-outline">
+                            Continue
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <i class="fas fa-clipboard-list"></i>
+                <p>No attendance sessions found</p>
+                <a href="{{ url_for('take_attendance') }}" class="btn btn-primary">
+                    Start First Session
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="content-card">
+        <div class="card-header">
+            <h3>Quick Actions</h3>
+        </div>
+        <div class="card-body">
+            <div class="action-buttons">
+                <a href="{{ url_for('take_attendance') }}" class="action-btn">
+                    <i class="fas fa-camera"></i>
+                    <span>Take Attendance</span>
+                    <small>Start new session</small>
+                </a>
+                
+                <a href="{{ url_for('faculty_analytics') }}" class="action-btn">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>View Analytics</span>
+                    <small>Teaching statistics</small>
+                </a>
+                
+                <a href="{{ url_for('faculty_download_report') }}" class="action-btn">
+                    <i class="fas fa-download"></i>
+                    <span>Export Data</span>
+                    <small>Download records</small>
+                </a>
+
+                <a href="{{ url_for('faculty_download_pdf_report') }}" target="_blank" class="action-btn">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>PDF Report</span>
+                    <small>Printable format</small>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

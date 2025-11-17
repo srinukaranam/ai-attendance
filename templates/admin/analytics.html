@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1>System Analytics</h1>
+    <p>Comprehensive insights and reports</p>
+</div>
+
+<div class="analytics-container">
+    <div class="analytics-grid">
+        <div class="content-card">
+            <div class="card-header">
+                <h3>Attendance Overview</h3>
+            </div>
+            <div class="card-body">
+                <div class="chart-placeholder">
+                    <i class="fas fa-chart-pie"></i>
+                    <p>Attendance Distribution Chart</p>
+                    <small>Shows present vs absent percentages across departments</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="card-header">
+                <h3>Department Statistics</h3>
+            </div>
+            <div class="card-body">
+                <div class="stats-list">
+                    <div class="stat-item">
+                        <span class="stat-label">Computer Science</span>
+                        <span class="stat-value">85% attendance</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Electronics</span>
+                        <span class="stat-value">78% attendance</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Mechanical</span>
+                        <span class="stat-value">82% attendance</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Civil</span>
+                        <span class="stat-value">79% attendance</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Electrical</span>
+                        <span class="stat-value">81% attendance</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="card-header">
+                <h3>Face Recognition Performance</h3>
+            </div>
+            <div class="card-body">
+                <div class="performance-metrics">
+                    <div class="metric-card">
+                        <div class="metric-value">95.2%</div>
+                        <div class="metric-label">Accuracy Rate</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">1.2s</div>
+                        <div class="metric-label">Avg. Recognition Time</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">98%</div>
+                        <div class="metric-label">Success Rate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="card-header">
+                <h3>System Usage</h3>
+            </div>
+            <div class="card-body">
+                <div class="usage-stats">
+                    <div class="usage-item">
+                        <span class="usage-label">Daily Active Users</span>
+                        <span class="usage-value">247</span>
+                    </div>
+                    <div class="usage-item">
+                        <span class="usage-label">Weekly Sessions</span>
+                        <span class="usage-value">156</span>
+                    </div>
+                    <div class="usage-item">
+                        <span class="usage-label">Monthly Growth</span>
+                        <span class="usage-value success">+12%</span>
+                    </div>
+                    <div class="usage-item">
+                        <span class="usage-label">System Uptime</span>
+                        <span class="usage-value">99.9%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-card">
+        <div class="card-header">
+            <h3>Recent Reports</h3>
+            <button class="btn btn-primary">
+                <i class="fas fa-download"></i> Export All Data
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="reports-list">
+                <div class="report-item">
+                    <div class="report-icon">
+                        <i class="fas fa-file-excel"></i>
+                    </div>
+                    <div class="report-info">
+                        <h4>Monthly Attendance Report - November 2024</h4>
+                        <p>Complete attendance data for all departments</p>
+                        <small>Generated on: 2024-11-30 | Size: 2.4MB</small>
+                    </div>
+                    <div class="report-actions">
+                        <button class="btn btn-sm btn-outline">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="report-item">
+                    <div class="report-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="report-info">
+                        <h4>Faculty Performance Report</h4>
+                        <p>Session statistics and faculty activity</p>
+                        <small>Generated on: 2024-11-29 | Size: 1.8MB</small>
+                    </div>
+                    <div class="report-actions">
+                        <button class="btn btn-sm btn-outline">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="report-item">
+                    <div class="report-icon">
+                        <i class="fas fa-file-csv"></i>
+                    </div>
+                    <div class="report-info">
+                        <h4>Student Database Export</h4>
+                        <p>Complete student records with face registration status</p>
+                        <small>Generated on: 2024-11-28 | Size: 3.1MB</small>
+                    </div>
+                    <div class="report-actions">
+                        <button class="btn btn-sm btn-outline">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

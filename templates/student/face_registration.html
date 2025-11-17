@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Face Registration{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1>Face Registration</h1>
+    <p>Register your face for attendance recognition</p>
+</div>
+
+<div class="face-registration-container">
+    <div class="registration-steps">
+        <div class="step active">
+            <div class="step-number">1</div>
+            <div class="step-info">
+                <h4>Position Your Face</h4>
+                <p>Make sure your face is clearly visible</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-info">
+                <h4>Capture Image</h4>
+                <p>Take a clear photo of your face</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-info">
+                <h4>Registration Complete</h4>
+                <p>Your face data is stored securely</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="camera-section">
+        <div class="camera-container">
+            <video id="video" autoplay playsinline></video>
+            <canvas id="canvas" style="display: none;"></canvas>
+            <div class="face-overlay">
+                <div class="face-guide"></div>
+            </div>
+        </div>
+        
+        <div class="camera-controls">
+            <button id="capture-btn" class="btn btn-primary">
+                <i class="fas fa-camera"></i> Capture Image
+            </button>
+            <button id="retake-btn" class="btn btn-outline" style="display: none;">
+                <i class="fas fa-redo"></i> Retake
+            </button>
+            <button id="register-btn" class="btn btn-success" style="display: none;">
+                <i class="fas fa-check"></i> Register Face
+            </button>
+        </div>
+    </div>
+
+    <div class="preview-section" style="display: none;">
+        <h3>Preview</h3>
+        <img id="preview-image" src="" alt="Captured Image">
+        <p class="preview-info">Make sure your face is clear and well-lit</p>
+    </div>
+</div>
+
+<div id="registration-result"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/camera.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeFaceRegistration();
+    });
+</script>
+{% endblock %}

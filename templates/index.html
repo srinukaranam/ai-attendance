@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Smart Attendance Management with AI</h1>
+        <p class="hero-subtitle">Revolutionize your attendance tracking with facial recognition technology</p>
+        <div class="hero-buttons">
+            <a href="{{ url_for('register', user_type='student') }}" class="btn btn-primary">
+                <i class="fas fa-user-graduate"></i> Student Registration
+            </a>
+            <a href="{{ url_for('register', user_type='faculty') }}" class="btn btn-secondary">
+                <i class="fas fa-chalkboard-teacher"></i> Faculty Registration
+            </a>
+            <a href="{{ url_for('login') }}" class="btn btn-outline">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </a>
+        </div>
+    </div>
+    <div class="hero-image">
+        <div class="floating-card">
+            <i class="fas fa-face-recognition"></i>
+            <h3>Face Recognition</h3>
+            <p>Advanced AI technology</p>
+        </div>
+        <div class="floating-card">
+            <i class="fas fa-chart-bar"></i>
+            <h3>Real-time Analytics</h3>
+            <p>Instant insights</p>
+        </div>
+        <div class="floating-card">
+            <i class="fas fa-mobile-alt"></i>
+            <h3>Responsive Design</h3>
+            <p>Works on all devices</p>
+        </div>
+    </div>
+</div>
+
+<section class="features-section">
+    <div class="container">
+        <h2 class="section-title">Why Choose Our System?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-bolt"></i>
+                <h3>Fast & Accurate</h3>
+                <p>Quick face recognition with high accuracy using advanced AI algorithms</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Secure</h3>
+                <p>Your data is protected with enterprise-grade security measures</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Analytics</h3>
+                <p>Comprehensive attendance reports and analytics dashboard</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-users"></i>
+                <h3>Multi-role</h3>
+                <p>Separate dashboards for Students, Faculty, and Administrators</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

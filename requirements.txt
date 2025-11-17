@@ -1,0 +1,10 @@
+flask
+flask-sqlalchemy
+flask-login
+werkzeug
+opencv-python
+numpy
+pillow
+matplotlib
+bcrypt
+pytz
